@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction System - IBBUL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== TOP UNIVERSITY BANNER ===== -->
+    <header class="uni-banner">
+        <div class="banner-content">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="IBBUL Logo" class="uni-logo">
+            </div>
+            <div class="banner-text">
+                <h1>Ibrahim Badamasi Babangida University, Lapai</h1>
+                <p class="department-text">Department of Computer Science</p>
+                <p class="faculty-text">Faculty of Science</p>
+            </div>
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='ibbul_logo.png') }}" alt="IBBUL Logo" class="uni-logo">
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== PROJECT TITLE BAR ===== -->
+    <div class="project-title-bar">
+        <h2><i class="fas fa-heartbeat"></i> Diabetes Prediction System</h2>
+        <p>An Undergraduate Research Project — Powered by Machine Learning</p>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-container">
+
+        <!-- INFO CARD -->
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="info-text">
+                <strong>How it works:</strong> Enter the patient's health information below.
+                The system will use a computer model to check if the person may have diabetes (sugar disease).
+                <br><em>If you don't understand any field, click the green "Help" button below.</em>
+            </div>
+        </div>
+
+        <!-- ===== HELP GUIDE SECTION (COLLAPSIBLE) ===== -->
+        <div class="help-section">
+            <button type="button" class="help-toggle" id="helpToggleBtn" onclick="toggleHelp()">
+                <i class="fas fa-question-circle"></i>
+                <span>Don't Understand the Fields? Click Here for Help</span>
+                <i class="fas fa-chevron-down help-arrow" id="helpArrow"></i>
+            </button>
+
+            <div class="help-content" id="helpContent">
+                <div class="help-header">
+                    <h3><i class="fas fa-book-open"></i> Simple Guide — What Each Field Means</h3>
+                    <p class="help-subtitle">
+                        This guide explains each field in simple English so anyone can use this system.
+                        You can get most of these numbers from a hospital test result or a doctor.
+                    </p>
+                </div>
+
+                <div class="help-grid">
+
+                    <!-- Pregnancies -->
+                    <div class="help-item">
+                        <div class="help-item-icon pregnancies-icon">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Pregnancies</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> How many times the woman has been pregnant before.
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Example:</strong> If a woman has given birth 3 times and had 1 miscarriage, the number is <strong>4</strong>.
+                                If the patient is a man, or has never been pregnant, put <strong>0</strong>.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Ask the patient directly.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Glucose -->
+                    <div class="help-item">
+                        <div class="help-item-icon glucose-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Glucose (mg/dL)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> The amount of sugar in the person's blood.
+                                This is the most important test for diabetes (sugar disease).
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Normal range:</strong> Between <strong>70–140 mg/dL</strong>.
+                                If the number is higher than 140, the person may have too much sugar in their blood.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Blood test at any hospital, clinic, or lab.
+                                They call it "fasting blood sugar" or "glucose test."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Blood Pressure -->
+                    <div class="help-item">
+                        <div class="help-item-icon bp-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Blood Pressure (mm Hg)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> How hard the blood is pushing against the walls
+                                of the body's blood pipes (vessels). We need only the <strong>lower number</strong>
+                                (the second/bottom number).
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Example:</strong> If the doctor says your BP is "120/80", enter <strong>80</strong> here.
+                                Normal is around <strong>60–80</strong>.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Any hospital, pharmacy, or health centre can check BP.
+                                It's the machine they wrap around your arm.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Skin Thickness -->
+                    <div class="help-item">
+                        <div class="help-item-icon skin-icon">
+                            <i class="fas fa-ruler-vertical"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Skin Thickness (mm)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> How thick the fat under the skin is at the back
+                                of the upper arm. This helps know if the person has too much body fat.
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Normal range:</strong> Around <strong>10–50 mm</strong>.
+                                A doctor or nurse pinches the skin on the back of the arm and measures it with a small tool.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> A hospital or clinic. If you don't have it,
+                                you can enter <strong>20</strong> as an average.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Insulin -->
+                    <div class="help-item">
+                        <div class="help-item-icon insulin-icon">
+                            <i class="fas fa-syringe"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Insulin (μU/ml)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> Insulin is a chemical the body makes to control
+                                sugar in the blood. This number shows how much insulin is in the blood
+                                <strong>2 hours after eating</strong>.
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Normal range:</strong> Around <strong>16–166 μU/ml</strong>.
+                                Too little insulin means the body cannot control sugar properly.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Blood test at a hospital or lab.
+                                Ask for "insulin level test." If you don't have it, you can enter <strong>80</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- BMI -->
+                    <div class="help-item">
+                        <div class="help-item-icon bmi-icon">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>BMI (Body Mass Index)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> A number that shows if the person's weight is
+                                healthy for their height. It tells you if someone is <em>too thin</em>,
+                                <em>normal</em>, <em>overweight</em>, or <em>obese (too fat)</em>.
+                            </p>
+                            <div class="bmi-table">
+                                <p><strong>BMI Guide:</strong></p>
+                                <ul>
+                                    <li>Below 18.5 → Too thin (Underweight)</li>
+                                    <li>18.5 – 24.9 → Normal / Healthy ✅</li>
+                                    <li>25.0 – 29.9 → Overweight ⚠️</li>
+                                    <li>30.0 and above → Obese (too fat) 🔴</li>
+                                </ul>
+                            </div>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>How to calculate:</strong> Weight (kg) ÷ (Height in metres × Height in metres).
+                                <br>Example: 70kg, 1.65m tall → 70 ÷ (1.65 × 1.65) = <strong>25.7</strong>
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Weigh yourself and measure your height,
+                                then calculate, or ask a doctor/nurse.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Diabetes Pedigree Function -->
+                    <div class="help-item">
+                        <div class="help-item-icon pedigree-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Diabetes Pedigree Function</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> This is a number that shows <em>how likely</em>
+                                the person is to have diabetes <strong>because of family history</strong>.
+                                If your parents, grandparents, or siblings have diabetes, this number will be higher.
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Typical range:</strong> Between <strong>0.08 and 2.42</strong>.
+                                <br>• Low (0.1–0.3) → Few family members have diabetes
+                                <br>• Medium (0.3–0.7) → Some family members have it
+                                <br>• High (0.7+) → Many close family members have diabetes
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> This is usually calculated by
+                                a doctor or from medical records. If you're unsure, use <strong>0.5</strong> as average.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="help-item">
+                        <div class="help-item-icon age-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="help-item-body">
+                            <h4>Age (Years)</h4>
+                            <p class="help-simple">
+                                <strong>Simple meaning:</strong> How old the person is in years.
+                                Older people are more likely to develop diabetes, especially after age 40–45.
+                            </p>
+                            <p class="help-example">
+                                <i class="fas fa-lightbulb"></i>
+                                <strong>Example:</strong> If the person was born in 1990 and this year is 2025,
+                                their age is <strong>35</strong>.
+                            </p>
+                            <p class="help-where">
+                                <i class="fas fa-hospital"></i> <em>Where to get it:</em> Ask the patient their age.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- WHERE TO GET TESTS NOTE -->
+                <div class="help-note">
+                    <div class="help-note-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <div class="help-note-text">
+                        <strong>Where can I do these tests in Nigeria?</strong>
+                        <p>
+                            You can get most of these numbers (Glucose, Blood Pressure, Insulin) by visiting
+                            any <strong>General Hospital, Primary Health Centre, Private Clinic, or Medical Laboratory</strong>
+                            near you. Ask for a <strong>"diabetes screening test"</strong> or
+                            <strong>"blood sugar test."</strong> It usually costs between ₦1,000 – ₦5,000.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== PREDICTION FORM ===== -->
+        <form action="/predict" method="POST" class="prediction-form" id="predictionForm">
+            <h3 class="form-section-title">
+                <i class="fas fa-user-edit"></i> Patient Health Information
+            </h3>
+
+            <div class="form-grid">
+
+                <!-- Pregnancies -->
+                <div class="form-group">
+                    <label for="Pregnancies">
+                        <i class="fas fa-baby"></i> Pregnancies
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="Pregnancies" id="Pregnancies"
+                           placeholder="e.g. 2" min="0" required>
+                    <span class="field-hint">How many times pregnant (put 0 if none or male)</span>
+                </div>
+
+                <!-- Glucose -->
+                <div class="form-group">
+                    <label for="Glucose">
+                        <i class="fas fa-tint"></i> Glucose (mg/dL)
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="Glucose" id="Glucose"
+                           placeholder="e.g. 120" min="0" required>
+                    <span class="field-hint">Blood sugar level from hospital test (normal: 70–140)</span>
+                </div>
+
+                <!-- Blood Pressure -->
+                <div class="form-group">
+                    <label for="BloodPressure">
+                        <i class="fas fa-heartbeat"></i> Blood Pressure (mm Hg)
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="BloodPressure" id="BloodPressure"
+                           placeholder="e.g. 80" min="0" required>
+                    <span class="field-hint">The lower/bottom BP number (e.g. if 120/80, enter 80)</span>
+                </div>
+
+                <!-- Skin Thickness -->
+                <div class="form-group">
+                    <label for="SkinThickness">
+                        <i class="fas fa-ruler-vertical"></i> Skin Thickness (mm)
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="SkinThickness" id="SkinThickness"
+                           placeholder="e.g. 20" min="0" required>
+                    <span class="field-hint">Fat thickness under upper arm skin (enter 20 if unsure)</span>
+                </div>
+
+                <!-- Insulin -->
+                <div class="form-group">
+                    <label for="Insulin">
+                        <i class="fas fa-syringe"></i> Insulin (μU/ml)
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="Insulin" id="Insulin"
+                           placeholder="e.g. 85" min="0" required>
+                    <span class="field-hint">Insulin level from blood test (enter 80 if unsure)</span>
+                </div>
+
+                <!-- BMI -->
+                <div class="form-group">
+                    <label for="BMI">
+                        <i class="fas fa-weight"></i> BMI
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="BMI" id="BMI"
+                           placeholder="e.g. 25.5" min="0" required>
+                    <span class="field-hint">Weight ÷ height² — shows if weight is healthy (normal: 18.5–24.9)</span>
+                </div>
+
+                <!-- Diabetes Pedigree Function -->
+                <div class="form-group">
+                    <label for="DiabetesPedigreeFunction">
+                        <i class="fas fa-dna"></i> Family Diabetes Score
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="DiabetesPedigreeFunction"
+                           id="DiabetesPedigreeFunction" placeholder="e.g. 0.5" min="0" required>
+                    <span class="field-hint">Family diabetes history score (enter 0.5 if unsure)</span>
+                </div>
+
+                <!-- Age -->
+                <div class="form-group">
+                    <label for="Age">
+                        <i class="fas fa-calendar-alt"></i> Age (years)
+                        <span class="field-help-btn" onclick="scrollToHelp()" title="Click for explanation">?</span>
+                    </label>
+                    <input type="number" step="any" name="Age" id="Age"
+                           placeholder="e.g. 35" min="1" required>
+                    <span class="field-hint">How old the patient is</span>
+                </div>
+
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="button-group">
+                <button type="submit" class="btn-predict">
+                    <i class="fas fa-search-plus"></i> Check Diabetes Risk
+                </button>
+                <button type="reset" class="btn-reset">
+                    <i class="fas fa-redo"></i> Clear All
+                </button>
+            </div>
+        </form>
+
+        <!-- ===== RESULT BOX ===== -->
+        {% if prediction_text %}
+        <div class="result-box result-{{ 'positive' if color == 'red' else 'negative' }}">
+            <div class="result-icon">
+                {% if color == 'red' %}
+                    <i class="fas fa-exclamation-triangle"></i>
+                {% else %}
+                    <i class="fas fa-check-circle"></i>
+                {% endif %}
+            </div>
+            <div class="result-content">
+                <h3 class="result-title">Prediction Result</h3>
+                <p class="result-text" style="color: {{ color }};">{{ prediction_text }}</p>
+            </div>
+        </div>
+        <div class="disclaimer">
+            <i class="fas fa-exclamation-circle"></i>
+            <strong>Important:</strong> This result is from a computer model and is for
+            <strong>learning/research purposes only</strong>. It is <strong>NOT</strong> a doctor's diagnosis.
+            Please visit a hospital or doctor to confirm.
+        </div>
+        {% endif %}
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-top">
+                <img src="{{ url_for('static', filename='ibbul_logo.png') }}" alt="IBBUL Logo" class="footer-logo">
+                <div class="footer-project-info">
+                    <h4>Undergraduate Final Year Project</h4>
+                    <p class="project-full-title">
+                        "Development of a Machine Learning-Based Diabetes Prediction System"
+                    </p>
+                </div>
+            </div>
+            <div class="footer-details">
+                <div class="footer-col">
+                    <h5><i class="fas fa-user-graduate"></i> Student</h5>
+                    <p>Student Full Name</p>
+                    <p>Matric No: UG/00/0000</p>
+                </div>
+                <div class="footer-col">
+                    <h5><i class="fas fa-chalkboard-teacher"></i> Supervisor</h5>
+                    <p>Supervisor Full Name</p>
+                    <p>Dept. of Computer Science</p>
+                </div>
+                <div class="footer-col">
+                    <h5><i class="fas fa-university"></i> Institution</h5>
+                    <p>IBB University, Lapai</p>
+                    <p>Niger State, Nigeria</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ibrahim Badamasi Babangida University, Lapai. All Rights Reserved.</p>
+                <p class="session-text">Academic Session: 2024/2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // Toggle help section
+        function toggleHelp() {
+            const content = document.getElementById('helpContent');
+            const arrow = document.getElementById('helpArrow');
+            const btn = document.getElementById('helpToggleBtn');
+
+            if (content.classList.contains('help-open')) {
+                content.classList.remove('help-open');
+                arrow.classList.remove('arrow-up');
+                btn.classList.remove('active');
+            } else {
+                content.classList.add('help-open');
+                arrow.classList.add('arrow-up');
+                btn.classList.add('active');
+            }
+        }
+
+        // Scroll to help section when ? is clicked
+        function scrollToHelp() {
+            const helpBtn = document.getElementById('helpToggleBtn');
+            const content = document.getElementById('helpContent');
+
+            if (!content.classList.contains('help-open')) {
+                toggleHelp();
+            }
+            helpBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Scroll to result on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultBox = document.querySelector('.result-box');
+            if (resultBox) {
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Form group focus animation
+        const inputs = document.querySelectorAll('.form-group input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+    </script>
+
+</body>
+</html>
