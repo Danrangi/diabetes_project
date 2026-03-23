@@ -19,14 +19,16 @@ app = Flask(__name__,
             template_folder=resource_path('templates'),
             static_folder=resource_path('static'))
 
-model_path = resource_path('diabetes_model.pkl')
-scaler_path = resource_path('scaler.pkl')
+# Load model lazily so resource_path works correctly inside the bundle
+model = None
+scaler = None
 
-with open(model_path, 'rb') as f:
-    model = pickle.load(f)
-
-with open(scaler_path, 'rb') as f:
-    scaler = pickle.load(f)
+def load_model():
+    global model, scaler
+    with open(resource_path('diabetes_model.pkl'), 'rb') as f:
+        model = pickle.load(f)
+    with open(resource_path('scaler.pkl'), 'rb') as f:
+        scaler = pickle.load(f)
 
 @app.route('/')
 def home():
@@ -67,5 +69,6 @@ def open_browser():
     webbrowser.open('http://localhost:5000')
 
 if __name__ == '__main__':
+    load_model()
     threading.Thread(target=open_browser, daemon=True).start()
     app.run(debug=False, port=5000, use_reloader=False)
