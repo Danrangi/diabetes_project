@@ -32,3 +32,4 @@ jobs:
       with:
         name: DiabetesPredictor-App
         path: dist/DiabetesPredictor.exe
+        retention-days: 30
