@@ -25,7 +25,34 @@ jobs:
 
     - name: Build EXE with PyInstaller
       run: |
-        pyinstaller --noconfirm --onefile --windowed --name "DiabetesPredictor" --add-data "templates;templates" --add-data "static;static" --add-data "diabetes_model.pkl;." --add-data "scaler.pkl;." app.py
+        pyinstaller --noconfirm --onefile --windowed `
+          --name "DiabetesPredictor" `
+          --add-data "templates;templates" `
+          --add-data "static;static" `
+          --add-data "diabetes_model.pkl;." `
+          --add-data "scaler.pkl;." `
+          --hidden-import sklearn `
+          --hidden-import sklearn.utils._cython_blas `
+          --hidden-import sklearn.neighbors._partition_nodes `
+          --hidden-import sklearn.tree `
+          --hidden-import sklearn.tree._utils `
+          --hidden-import sklearn.ensemble `
+          --hidden-import sklearn.ensemble._forest `
+          --hidden-import sklearn.ensemble._gb `
+          --hidden-import sklearn.ensemble._weight_boosting `
+          --hidden-import sklearn.linear_model `
+          --hidden-import sklearn.linear_model._logistic `
+          --hidden-import sklearn.svm `
+          --hidden-import sklearn.svm._base `
+          --hidden-import sklearn.preprocessing `
+          --hidden-import sklearn.preprocessing._data `
+          --hidden-import sklearn.pipeline `
+          --hidden-import sklearn.metrics `
+          --hidden-import sklearn.utils `
+          --hidden-import sklearn.utils.validation `
+          --hidden-import sklearn.utils._bunch `
+          --collect-all sklearn `
+          app.py
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
